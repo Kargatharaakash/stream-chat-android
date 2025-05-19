@@ -17,6 +17,7 @@
 package io.getstream.chat.android.compose.ui.channel.info
 
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -40,6 +41,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -181,13 +183,13 @@ private fun GroupChannelInfoContent(
         ) {
             items(
                 items = content.members,
-                key = { it.user.id },
+                key = Member::getUserId,
             ) { member ->
                 GroupChannelInfoMemberButton(
                     modifier = Modifier.animateItem(),
                     member = member,
                     isOwner = content.owner.id == member.getUserId(),
-                    onClick = { onViewAction(ChannelInfoViewAction.MemberClick(user = member.user)) },
+                    onClick = { onViewAction(ChannelInfoViewAction.MemberClick(member = member)) },
                 )
             }
             if (content.members.canExpand) {
@@ -221,8 +223,13 @@ private fun GroupChannelInfoMemberButton(
     onClick: (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
+    val bannedColor = ChatTheme.colors.errorAccent
+    val alpha by animateFloatAsState(targetValue = if (member.banned) 0.3f else 0f)
     ChannelInfoOption(
-        modifier = modifier,
+        modifier = modifier.drawWithContent {
+            drawContent()
+            drawRect(color = bannedColor, alpha = alpha, size = size)
+        },
         onClick = onClick,
     ) {
         val user = member.user
@@ -354,7 +361,7 @@ internal fun GroupChannelInfoExpandedMembers() {
                     Member(user = PreviewUserData.user1.copy(lastActive = Date())),
                     Member(user = PreviewUserData.user2.copy(online = true)),
                     Member(user = PreviewUserData.user3),
-                    Member(user = PreviewUserData.user4),
+                    Member(user = PreviewUserData.user4, banned = true),
                 ),
                 minimumVisibleItems = 2,
                 isCollapsed = false,
