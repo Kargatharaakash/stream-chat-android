@@ -85,7 +85,7 @@
 
 ### ✅ Added
 - Introduce an **experimental** `ChatsScreen` supporting adaptive layout for large screen devices. [#5671](https://github.com/GetStream/stream-chat-android/pull/5671) [#5556](https://github.com/GetStream/stream-chat-android/pull/5556)
-- Introduce **experimental** `DirectChannelInfoScreen` and `GroupChannelInfoScreen` for displaying channel information and the available channel actions.. [#5773](https://github.com/GetStream/stream-chat-android/pull/5773)
+- Introduce **experimental** `DirectChannelInfoScreen` and `GroupChannelInfoScreen` for displaying channel information and the available channel actions. [#5773](https://github.com/GetStream/stream-chat-android/pull/5773)
 
 ### ⚠️ Changed
 
