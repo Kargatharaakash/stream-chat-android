@@ -1033,7 +1033,7 @@ internal class ChannelInfoViewControllerTest {
         }
 
         launch {
-            fixture.verifyMemberUnbanned(member)
+            fixture.verifyMemberNotBanned(member)
             fixture.verifyNoMoreInteractions()
         }
     }
@@ -1243,7 +1243,7 @@ private class Fixture {
         )
     }
 
-    fun verifyMemberUnbanned(member: Member) = apply {
+    fun verifyMemberNotBanned(member: Member) = apply {
         verify(channelClient).unbanUser(targetId = member.getUserId())
     }
 
