@@ -137,6 +137,7 @@ public fun GroupChannelInfoScreen(
         modal = modal,
         isGroupChannel = true,
         onViewAction = viewModel::onViewAction,
+        onMemberViewEvent = viewModel::onMemberViewEvent,
         onDismiss = { modal = null },
     )
 }
